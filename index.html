@@ -1,46 +1,86 @@
+
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>পেমেন্ট পেজ</title>
+    <title>Payment Page</title>
     <style>
-        body { font-family: 'Bangla', Arial, sans-serif; background-color: #F0F0F0; margin: 0; padding: 0; }
-        .container { max-width: 500px; margin: 0 auto; background-color: #FFF0F5; min-height: 100vh; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease; }
+        body { font-family: Arial, sans-serif; background-color: #F0F0F0; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 0 auto; background-color: #FFF0F5; min-height: 100vh; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
         .bonus-banner { background-color: #E91E63; color: #FFFFFF; text-align: center; padding: 12px 15px; font-size: 14px; font-weight: bold; line-height: 1.4; }
         header { background-color: #000000; color: #FFFFFF; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
         .logo-img { height: 45px; width: auto; object-fit: contain; }
         .service-link { color: #FFFFFF; font-size: 14px; text-decoration: underline; font-weight: bold; }
-        .brand-title { font-size: 22px; font-weight: bold; }
         .payment-system-text { font-size: 18px; font-weight: bold; }
         .lang-toggle { text-align: center; padding: 10px 0; font-size: 14px; }
         .lang-toggle a { color: #555; text-decoration: none; margin: 0 10px; }
-        .send-money-prominent { font-size: 24px; font-weight: bold; color: #D32F2F; margin: 15px 20px; text-align: center; padding: 12px; border: 2px dashed #D32F2F; border-radius: 8px; animation: bounce 1.2s infinite ease-in-out; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .send-money-prominent { font-size: 24px; font-weight: bold; color: #D32F2F; margin: 15px 20px; text-align: center; padding: 12px; border: 2px dashed #D32F2F; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .warning-box { background-color: #FCE4EC; border: 1px solid #F48FB1; padding: 15px; margin: 0 20px 20px 20px; border-radius: 6px; color: #C2185B; font-size: 14px; text-align: center; }
         .amount-selection { padding: 20px; text-align: center; }
         .custom-input { width: 100%; padding: 12px; font-size: 18px; font-weight: bold; border: 2px solid #E91E63; border-radius: 6px; box-sizing: border-box; text-align: center; margin-bottom: 15px; outline: none; }
-        .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px; }
         .amount-btn { background-color: #FAFAFA; border: 1px solid #CCCCCC; padding: 12px 0; cursor: pointer; border-radius: 4px; font-size: 15px; font-weight: bold; }
+        .amount-btn:active { background-color: #E91E63; color: #FFFFFF; }
         .method-selection { padding: 0 20px 20px 20px; }
         .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .method-btn { padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; text-align: center; border: 2px solid transparent; background-color: #FFF0F5; }
-        .method-btn.bkash-btn { border-color: #E91E63; color: #E91E63; }
-        .method-btn.nagad-btn { border-color: #FF9800; color: #FF9800; }
+        .method-btn { padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; text-align: center; border: 2px solid transparent; background-color: #FAFAFA; color: #333; }
+        .method-btn.active { border-color: #E91E63; color: #E91E63; }
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #666; }
+        .input-group-row { display: flex; gap: 10px; align-items: center; }
+        .input-group-row input { flex: 1; }
         .input-group input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #CCCCCC; border-radius: 6px; box-sizing: border-box; outline: none; }
+        .copy-btn { background-color: #4CAF50; color: #FFFFFF; padding: 12px 16px; font-size: 14px; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
         .submit-btn { width: 100%; background-color: #E91E63; color: #FFFFFF; padding: 15px; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; }
     </style>
+    <script>
+        function setAmount(amount) {
+            document.getElementById('amountInput').value = amount;
+        }
+
+        function selectMethod(methodName) {
+            document.getElementById('bkashMethod').classList.remove('active');
+            document.getElementById('nagadMethod').classList.remove('active');
+            
+            let walletLabel = document.getElementById('walletLabel');
+            let walletInput = document.getElementById('walletInput');
+            
+            if (methodName === 'bKash') {
+                document.getElementById('bkashMethod').classList.add('active');
+                walletLabel.innerText = "bKash Wallet No*";
+                walletInput.value = "01580987778";
+            } else {
+                document.getElementById('nagadMethod').classList.add('active');
+                walletLabel.innerText = "Nagad Wallet No*";
+                walletInput.value = "01614175872";
+            }
+        }
+
+        function copyToClipboard() {
+            let walletInput = document.getElementById('walletInput');
+            walletInput.select();
+            walletInput.setSelectionRange(0, 99999);
+            try {
+                navigator.clipboard.writeText(walletInput.value).then(() => {
+                    alert("Copied: " + walletInput.value);
+                });
+            } catch (err) {
+                document.execCommand('copy');
+                alert("Copied: " + walletInput.value);
+            }
+        }
+    </script>
 </head>
 <body>
-    <div class="container" id="mainContainer">
+    <div class="container">
         <div class="bonus-banner">
-            ৩০০% বোনাসটি সফলভাবে অ্যাক্টিভেট করা হয়েছে। অনুগ্রহপূর্বক আপনার অ্যামাউন্টটি সিলেক্ট করে ডিপোজিট সম্পূর্ণ করুন।
+            The 300% bonus has been successfully activated. Please select your amount and complete the deposit.
         </div>
         <header>
-            <span class="payment-system-text">পেমেন্ট সিস্টেম</span>
+            <span class="payment-system-text">PAYMENT SYSTEM</span>
             <img src="IMG_20261020_021205.png" alt="Logo" class="logo-img">
-            <a href="SERVICE" class="service-link">SERVICE</a>
+            <a href="#" class="service-link">SERVICE</a>
         </header>
 
         <div class="lang-toggle">
@@ -48,52 +88,56 @@
         </div>
 
         <div class="send-money-prominent">
-            সেন্ড মানি করুন
+            SEND MONEY
         </div>
 
-        <p style="text-align: center; font-size: 16px;">
-            <span style="color: gold;">WJ2</span> পেমেন্ট পেজ
+        <p style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+            <span style="color: yellow; font-size: 32px; font-weight: bold; -webkit-text-stroke: 1px black;">👑Wj2.net 300%Bonus👑</span>
         </p>
 
         <div class="amount-selection">
             <div class="input-group">
-                <input type="text" value="পরিমাণ নির্বাচন অথবা লিখুন" readonly style="color: #E91E63; text-align: center;" />
+                <label>Enter or select amount</label>
+                <input type="text" id="amountInput" class="custom-input" placeholder="300" />
             </div>
-            <div class="input-group" style="margin-top: 15px; margin-bottom: 20px;">
-                <input type="text" value="মিনিমাম ডিপোজিট ৩০০" readonly style="color: #D32F2F; border-color: #D32F2F; text-align: center;" />
+            <div class="input-group" style="margin-bottom: 20px;">
+                <input type="text" value="Minimum Deposit: 300" readonly style="color: #D32F2F; border: none; text-align: center; font-weight: bold; background-color: transparent;" />
             </div>
             <div class="amount-grid">
-                <button class="amount-btn">৩০০</button>
-                <button class="amount-btn">৪০০</button>
-                <button class="amount-btn">৫০০</button>
-                <button class="amount-btn">১০০০</button>
-                <button class="amount-btn">২০০০</button>
-                <button class="amount-btn">৫০০০</button>
+                <button class="amount-btn" onclick="setAmount('300')">300</button>
+                <button class="amount-btn" onclick="setAmount('400')">400</button>
+                <button class="amount-btn" onclick="setAmount('500')">500</button>
+                <button class="amount-btn" onclick="setAmount('1000')">1000</button>
+                <button class="amount-btn" onclick="setAmount('2000')">2000</button>
+                <button class="amount-btn" onclick="setAmount('5000')">5000</button>
             </div>
         </div>
 
         <div class="warning-box">
-            আপনি যদি টাকার পরিমাণ পরিবর্তন করেন, আপনি ক্রেডিট পেতে সফল হবেন না।
+            If you change the amount, you will not be able to receive the credit.
         </div>
 
         <div class="method-selection">
-            <label>পেমেন্ট মেথড নির্বাচন করুন:</label>
+            <label>Select payment method:</label>
             <div class="method-grid" style="margin-top: 10px;">
-                <button class="method-btn bkash-btn">bKash</button>
-                <button class="method-btn nagad-btn">Nagad</button>
+                <button class="method-btn active" id="bkashMethod" onclick="selectMethod('bKash')">bKash</button>
+                <button class="method-btn" id="nagadMethod" onclick="selectMethod('Nagad')">Nagad</button>
             </div>
         </div>
 
         <div style="padding: 0 20px 20px 20px;">
             <div class="input-group">
-                <label>bKash Wallet No*</label>
-                <input type="text" value="০১৫৮০৯৮৭৭৭৪" readonly />
+                <label id="walletLabel">bKash Wallet No*</label>
+                <div class="input-group-row">
+                    <input type="text" id="walletInput" value="01580987778" readonly />
+                    <button class="copy-btn" onclick="copyToClipboard()">Copy</button>
+                </div>
             </div>
             <div class="input-group">
-                <label>TrxID নাম্বারটি লিখুন (প্রয়োজন)</label>
-                <input type="text" placeholder="TrxID অবশ্যই পূরণ করতে হবে!" />
+                <label>TrxID Number (Required)</label>
+                <input type="text" placeholder="Enter TrxID here!" />
             </div>
-            <button class="submit-btn" style="background-color: #CCCCCC; color: #666;">নিশ্চিত</button>
+            <button class="submit-btn">Confirm</button>
         </div>
         
     </div>
