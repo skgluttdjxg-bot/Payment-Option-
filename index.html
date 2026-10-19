@@ -1,370 +1,102 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> পেমেন্ট পেজ</title>
+    <title>পেমেন্ট পেজ</title>
     <style>
-        body { WJ2
-            font-family: 'Bangla', Arial, sans-serif; 
-            background-color: #F0F0F0; 
-            margin: 0; 
-            padding: 0; 
-        }
-        
-        .container { 
-            max-width: 500px; 
-            margin: 0 auto; 
-            background-color: #FFF0F5; 
-            min-height: 100vh; 
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-            transition: background-color 0.3s ease; 
-        }
-
-        .container.bkash-theme { background-color: #FFF0F5; }
-        .container.nagad-theme { background-color: #FFF8E7; }
-
-        .bonus-banner { 
-            background-color: #E91E63; 
-            color: #FFFFFF; 
-            text-align: center; 
-            padding: 12px 15px; 
-            font-size: 14px; 
-            font-weight: bold; 
-            line-height: 1.4; 
-        }
-
-        header { 
-            background-color: #000000; 
-            color: #FFFFFF; 
-            padding: 15px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        .logo { font-weight: bold; font-size: 18px; }
-        .service-btn { 
-            background-color: #FFFFFF; 
-            color: #000000; 
-            padding: 5px 15px; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            text-decoration: none; 
-        }
-
-        .lang-toggle { text-align: right; padding: 5px 20px; font-size: 14px; }
-        .lang-toggle a { color: #000000; margin-left: 10px; }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .send-money-prominent { 
-            font-size: 24px; 
-            font-weight: bold; 
-            color: #D32F2F; 
-            margin: 15px 20px; 
-            text-align: center; 
-            background-color: #FFFFFF; 
-            padding: 12px; 
-            border-radius: 8px; 
-            border: 2px dashed #D32F2F; 
-            animation: bounce 1.2s infinite ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .amount-selection { padding: 20px; text-align: center; border-bottom: 1px solid #E0E0E0; }
-        .custom-amount-input {
-            width: 100%;
-            padding: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            border: 2px solid #E91E63;
-            border-radius: 6px;
-            box-sizing: border-box;
-            text-align: center;
-            margin-bottom: 15px;
-            outline: none;
-        }
+        body { font-family: 'Bangla', Arial, sans-serif; background-color: #F0F0F0; margin: 0; padding: 0; }
+        .container { max-width: 500px; margin: 0 auto; background-color: #FFF0F5; min-height: 100vh; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease; }
+        .bonus-banner { background-color: #E91E63; color: #FFFFFF; text-align: center; padding: 12px 15px; font-size: 14px; font-weight: bold; line-height: 1.4; }
+        header { background-color: #000000; color: #FFFFFF; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-img { height: 45px; width: auto; object-fit: contain; }
+        .service-link { color: #FFFFFF; font-size: 14px; text-decoration: underline; font-weight: bold; }
+        .brand-title { font-size: 22px; font-weight: bold; }
+        .payment-system-text { font-size: 18px; font-weight: bold; }
+        .lang-toggle { text-align: center; padding: 10px 0; font-size: 14px; }
+        .lang-toggle a { color: #555; text-decoration: none; margin: 0 10px; }
+        .send-money-prominent { font-size: 24px; font-weight: bold; color: #D32F2F; margin: 15px 20px; text-align: center; padding: 12px; border: 2px dashed #D32F2F; border-radius: 8px; animation: bounce 1.2s infinite ease-in-out; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .warning-box { background-color: #FCE4EC; border: 1px solid #F48FB1; padding: 15px; margin: 0 20px 20px 20px; border-radius: 6px; color: #C2185B; font-size: 14px; text-align: center; }
+        .amount-selection { padding: 20px; text-align: center; }
+        .custom-input { width: 100%; padding: 12px; font-size: 18px; font-weight: bold; border: 2px solid #E91E63; border-radius: 6px; box-sizing: border-box; text-align: center; margin-bottom: 15px; outline: none; }
         .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .amount-btn { 
-            background-color: #FAFAFA; 
-            border: 1px solid #CCCCCC; 
-            padding: 12px 0; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 15px; 
-            font-weight: bold; 
-        }
-        .amount-btn.active { background-color: #E91E63; color: #FFFFFF; border-color: #E91E63; }
-
-        .message { text-align: center; padding: 10px 20px; font-size: 14px; color: #D32F2F; }
-
-        .method-selection { padding: 0 20px 20px 20px; text-align: center; }
-        .method-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 15px; }
-        .method-btn { 
-            padding: 15px; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 16px; 
-            border: 2px solid #DDDDDD; 
-            background-color: #FAFAFA; 
-            transition: all 0.3s ease; 
-        }
-        .method-btn.active.bkash { border-color: #E91E63; background-color: #E91E63; color: #FFFFFF; }
-        .method-btn.active.nagad { border-color: #FF9800; background-color: #FF9800; color: #FFFFFF; }
-
-        .wallet-section { margin: 0 20px 20px 20px; }
-        .label { font-size: 14px; color: #616161; margin-bottom: 5px; }
-
-        .wallet-box { 
-            border: 1px solid #CCCCCC; 
-            padding: 15px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background-color: #FFFFFF; 
-            border-radius: 4px; 
-            cursor: pointer; 
-        }
-        .wallet-number { font-size: 20px; font-weight: bold; }
-        .copy-icon { color: #4CAF50; }
-
-        .input-section { margin: 0 20px 20px 20px; }
-        .input-label { font-size: 14px; font-weight: bold; color: #000000; margin-bottom: 10px; }
-        .trx-input { 
-            width: 100%; 
-            padding: 15px; 
-            border: 1px solid #D32F2F; 
-            border-radius: 4px; 
-            font-size: 16px; 
-            box-sizing: border-box; 
-            margin-bottom: 20px; 
-        }
-
-        .confirm-btn { 
-            width: 100%; 
-            padding: 15px; 
-            background-color: #FFFFFF; 
-            color: #000000; 
-            border: 1px solid #DDDDDD; 
-            border-radius: 4px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            text-align: center; 
-        }
-
-        .footer-nav { 
-            display: flex; 
-            justify-content: space-around; 
-            padding: 20px 10px; 
-            border-top: 1px solid #E0E0E0; 
-            background-color: #FAFAFA; 
-        }
-        .nav-item { text-align: center; color: #9E9E9E; font-size: 12px; }
-        .nav-icon { font-size: 24px; display: block; margin-bottom: 5px; }
-
-        .timer { text-align: center; color: #D32F2F; font-size: 14px; padding: 10px 20px; }
-        .warning-box { 
-            background-color: #FCE4EC; 
-            padding: 15px; 
-            margin: 0 20px 20px 20px; 
-            border-radius: 4px; 
-            color: #C2185B; 
-            font-size: 13px; 
-            text-align: center; 
-        }
-
-        .toast { 
-            visibility: hidden; 
-            min-width: 250px; 
-            margin-left: -125px; 
-            background-color: #333; 
-            color: #fff; 
-            text-align: center; 
-            border-radius: 2px; 
-            padding: 16px; 
-            position: fixed; 
-            z-index: 1; 
-            left: 50%; 
-            bottom: 30px; 
-            font-size: 17px; 
-        }
-        .toast.show { 
-            visibility: visible; 
-            animation: fadein 0.5s, fadeout 0.5s 2.5s; 
-        }
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0px; opacity: 0;} }
+        .amount-btn { background-color: #FAFAFA; border: 1px solid #CCCCCC; padding: 12px 0; cursor: pointer; border-radius: 4px; font-size: 15px; font-weight: bold; }
+        .method-selection { padding: 0 20px 20px 20px; }
+        .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .method-btn { padding: 15px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; text-align: center; border: 2px solid transparent; background-color: #FFF0F5; }
+        .method-btn.bkash-btn { border-color: #E91E63; color: #E91E63; }
+        .method-btn.nagad-btn { border-color: #FF9800; color: #FF9800; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 14px; font-weight: bold; margin-bottom: 5px; color: #666; }
+        .input-group input { width: 100%; padding: 12px; font-size: 16px; border: 1px solid #CCCCCC; border-radius: 6px; box-sizing: border-box; outline: none; }
+        .submit-btn { width: 100%; background-color: #E91E63; color: #FFFFFF; padding: 15px; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; }
     </style>
 </head>
 <body>
-
-<div class="container bkash-theme" id="mainContainer">
-    <div class="bonus-banner">
-        ৩০০% বোনাসটি সফলভাবে অ্যাক্টিভেট করা হয়েছে। অনুগ্রহপূর্বক আপনার অ্যামাউন্টটি সিলেক্ট করে ডিপোজিট সম্পূর্ণ করুন।
-    </div>
-
-    <header>
-        <div class="logo">পেমেন্ট সিস্টেম</div>
-        <a href="#" class="service-btn">SERVICE</a>
-    </header>
-
-    <div class="lang-toggle">
-        <a href="#">EN</a> | <a href="#">BN</a>
-    </div>
-
-    <div class="send-money-prominent">
-        সেন্ড মানি করুন
-    </div>
-
-    <div class="amount-selection">
-        <div class="label" style="margin-bottom: 10px;">পরিমাণ নির্বাচন অথবা লিখুন:</div>
-        <input type="number" id="customAmount" class="custom-amount-input" placeholder="মিনিমাম ডিপোজিট ৩০০" oninput="clearActiveButtons()">
-        <div class="amount-grid">
-            <button class="amount-btn" onclick="selectAmount(300, this)">৩০০</button>
-            <button class="amount-btn" onclick="selectAmount(400, this)">৪০০</button>
-            <button class="amount-btn" onclick="selectAmount(500, this)">৫০০</button>
-            <button class="amount-btn" onclick="selectAmount(1000, this)">১০০০</button>
-            <button class="amount-btn" onclick="selectAmount(2000, this)">২০০০</button>
-            <button class="amount-btn" onclick="selectAmount(5000, this)">৫০০০</button>
+    <div class="container" id="mainContainer">
+        <div class="bonus-banner">
+            ৩০০% বোনাসটি সফলভাবে অ্যাক্টিভেট করা হয়েছে। অনুগ্রহপূর্বক আপনার অ্যামাউন্টটি সিলেক্ট করে ডিপোজিট সম্পূর্ণ করুন।
         </div>
-    </div>
-    
-    <div class="message">
-        আপনি যদি টাকার পরিমাণ পরিবর্তন করেন, আপনি ক্রেডিট পেতে সফল হবেন না।
-    </div>
+        <header>
+            <span class="payment-system-text">পেমেন্ট সিস্টেম</span>
+            <img src="IMG_20261020_021205.png" alt="Logo" class="logo-img">
+            <a href="SERVICE" class="service-link">SERVICE</a>
+        </header>
 
-    <div class="method-selection">
-        <div class="label">পেমেন্ট মেথড নির্বাচন করুন:</div>
-        <div class="method-grid">
-            <button id="bkashBtn" class="method-btn active bkash" onclick="selectMethod('bkash')">bKash</button>
-            <button id="nagadBtn" class="method-btn nagad" onclick="selectMethod('nagad')">Nagad</button>
+        <div class="lang-toggle">
+            <a href="#">EN</a> | <a href="#">BN</a>
         </div>
-    </div>
 
-    <div class="wallet-section">
-        <div class="label" id="walletLabel">bKash Wallet No*</div>
-        <div style="font-size: 13px; color: #616161; margin-bottom: 10px;">এই নাম্বারে সেন্ড মানি করুন</div>
-        <div class="wallet-box" onclick="copyNumber()">
-            <span class="wallet-number" id="walletNumber">01580987778</span>
-            <span class="copy-icon">📋</span>
+        <div class="send-money-prominent">
+            সেন্ড মানি করুন
         </div>
-    </div>
 
-    <div class="input-section">
-        <div class="input-label">TrxID নাম্বারটি লিখুন (প্রয়োজন)</div>
-        <input type="text" class="trx-input" placeholder="TrxID অবশ্যই পূরণ করতে হবে!">
-    </div>
+        <p style="text-align: center; font-size: 16px;">
+            <span style="color: gold;">WJ2</span> পেমেন্ট পেজ
+        </p>
 
-    <div style="margin: 0 20px;">
-        <button class="confirm-btn">নিশ্চিত</button>
-    </div>
-
-    <div class="footer-nav">
-        <div class="nav-item">
-            <span class="nav-icon">💰</span>
-            সেন্ড মানি
+        <div class="amount-selection">
+            <div class="input-group">
+                <input type="text" value="পরিমাণ নির্বাচন অথবা লিখুন" readonly style="color: #E91E63; text-align: center;" />
+            </div>
+            <div class="input-group" style="margin-top: 15px; margin-bottom: 20px;">
+                <input type="text" value="মিনিমাম ডিপোজিট ৩০০" readonly style="color: #D32F2F; border-color: #D32F2F; text-align: center;" />
+            </div>
+            <div class="amount-grid">
+                <button class="amount-btn">৩০০</button>
+                <button class="amount-btn">৪০০</button>
+                <button class="amount-btn">৫০০</button>
+                <button class="amount-btn">১০০০</button>
+                <button class="amount-btn">২০০০</button>
+                <button class="amount-btn">৫০০০</button>
+            </div>
         </div>
-        <div class="nav-item">
-            <span class="nav-icon">📱</span>
-            মোবাইল রিচার্জ
+
+        <div class="warning-box">
+            আপনি যদি টাকার পরিমাণ পরিবর্তন করেন, আপনি ক্রেডিট পেতে সফল হবেন না।
         </div>
-        <div class="nav-item">
-            <span class="nav-icon">💸</span>
-            ক্যাশ আউট
+
+        <div class="method-selection">
+            <label>পেমেন্ট মেথড নির্বাচন করুন:</label>
+            <div class="method-grid" style="margin-top: 10px;">
+                <button class="method-btn bkash-btn">bKash</button>
+                <button class="method-btn nagad-btn">Nagad</button>
+            </div>
         </div>
-        <div class="nav-item">
-            <span class="nav-icon">💳</span>
-            পেমেন্ট
+
+        <div style="padding: 0 20px 20px 20px;">
+            <div class="input-group">
+                <label>bKash Wallet No*</label>
+                <input type="text" value="০১৫৮০৯৮৭৭৭৪" readonly />
+            </div>
+            <div class="input-group">
+                <label>TrxID নাম্বারটি লিখুন (প্রয়োজন)</label>
+                <input type="text" placeholder="TrxID অবশ্যই পূরণ করতে হবে!" />
+            </div>
+            <button class="submit-btn" style="background-color: #CCCCCC; color: #666;">নিশ্চিত</button>
         </div>
+        
     </div>
-
-    <div class="timer">
-        <strong>সেন্ড মানি</strong><br>
-        বাকি সময় <span id="timerText">০৫:০০</span>
-    </div>
-
-    <div class="warning-box">
-        <strong>সতর্কতা:</strong><br>
-        লেনদেন আইডি সঠিকভাবে পূরণ করতে হবে।
-    </div>
-</div>
-
-<div id="toast" class="toast">Number copied to clipboard!</div>
-
-<script>
-    function selectAmount(amount, btnElement) {
-        var buttons = document.querySelectorAll('.amount-btn');
-        buttons.forEach(function(btn) {
-            btn.classList.remove('active');
-        });
-        btnElement.classList.add('active');
-        document.getElementById('customAmount').value = amount;
-    }
-
-    function clearActiveButtons() {
-        var buttons = document.querySelectorAll('.amount-btn');
-        buttons.forEach(function(btn) {
-            btn.classList.remove('active');
-        });
-    }
-
-    function selectMethod(method) {
-        var bkashBtn = document.getElementById('bkashBtn');
-        var nagadBtn = document.getElementById('nagadBtn');
-        var walletNumber = document.getElementById('walletNumber');
-        var walletLabel = document.getElementById('walletLabel');
-        var container = document.getElementById('mainContainer');
-
-        bkashBtn.classList.remove('active');
-        nagadBtn.classList.remove('active');
-
-        if (method === 'bkash') {
-            bkashBtn.classList.add('active');
-            walletNumber.innerText = '01580987778';
-            walletLabel.innerText = 'bKash Wallet No*';
-            container.className = 'container bkash-theme';
-        } else if (method === 'nagad') {
-            nagadBtn.classList.add('active');
-            walletNumber.innerText = '01614175872';
-            walletLabel.innerText = 'Nagad Wallet No*';
-            container.className = 'container nagad-theme';
-        }
-    }
-
-    function copyNumber() {
-        var copyText = document.getElementById("walletNumber").innerText;
-        navigator.clipboard.writeText(copyText).then(function() {
-            var x = document.getElementById("toast");
-            x.className = "toast show";
-            setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-        });
-    }
-
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10);
-            seconds = parseInt(timer % 60, 10);
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-            display.innerText = minutes + ":" + seconds;
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }
-    
-    var fiveMinutes = 60 * 5,
-        display = document.querySelector('#timerText');
-    startTimer(fiveMinutes, display);
-</script>
-
 </body>
 </html>
 
